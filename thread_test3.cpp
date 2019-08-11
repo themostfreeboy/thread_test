@@ -18,6 +18,7 @@ void fun(int thread_index) {
 
 int main(int argc, char** argv) {
     std::cout.sync_with_stdio(true);
+    std::memset(is_finish, false, THREAD_NUM*sizeof(bool));
     for (int i=0; i<THREAD_NUM; ++i) {
         std::thread t(fun, i);
         t.detach();
