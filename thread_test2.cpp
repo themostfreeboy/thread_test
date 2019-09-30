@@ -20,6 +20,10 @@ void* fun(void* args) {
 
 int main(int argc, char** argv) {
     pthread_t thread[THREAD_NUM];
+    if (pthread_mutex_init(&mutex, NULL) != 0) {
+        printf("pthread_mutex_init error\n");
+        return 0;
+    }
     for (int i=0; i<THREAD_NUM; ++i) {
         pthread_create(&thread[i], NULL, fun, (void*)(&i));
     }
@@ -27,5 +31,8 @@ int main(int argc, char** argv) {
         pthread_join(thread[i], NULL);
     }
     printf("main:public_num=%d\n", public_num);
+    if (pthread_mutex_destroy(&mutex) != 0) {
+        printf("pthread_mutex_destroy error\n");
+    }
     return 0;
 }
